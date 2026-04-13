@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Love Nikki Theme Generator</title>
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #ffd6ec, #e0c3fc);
+  }
+
+  .card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 380px;
+  }
+
+  button {
+    margin: 3px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #f3f3f3;
+  }
+
+  button:hover {
+    background: #ffd1ea;
+  }
+
+  .generate {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: #ff8fcf;
+    color: white;
+    cursor: pointer;
+  }
+
+  .box {
+    background: #fff0f6;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    white-space: pre-line;
+  }
+
+  .small {
+    font-size: 12px;
+    color: gray;
+  }
+
+  .theme {
+    font-size: 18px;
+    font-weight: bold;
+    white-space: pre-line;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Styling Theme Generator for Nikki!</h2>
+
+  <p><b>Mode:</b> <span id="modeText">SIMPLE</span></p>
+
+  <div>
+    <button onclick="setMode('simple')">Simple</button>
+    <button onclick="setMode('with difficulty')">With Difficulty</button>
+    <button onclick="setMode('series')">Series</button>
+    <button onclick="setMode('nation')">Nation</button>
+    <button onclick="setMode('special')">Special</button>
+    <button onclick="setMode('love nikki competition')">Love Nikki Competition</button>
+  </div>
+
+  <div class="box">
+    <p class="small">Styling Theme</p>
+    <div class="theme" id="theme">Click generate to get a theme!</div>
+  </div>
+
+  <button class="generate" onclick="generateTheme()">🎲 Generate</button>
+</div>
+
+<script>
+const categories = [
+  "Dessert","Ocean","Cyberpunk","Royal","Festival","Winter","Floral","Space",
+  "Ancient","Dream","Steampunk","Fairytale","Music","Circus","School","Battle",
+  "Magic","Seasonal","Food","Celestial"
+];
+
+const roles = [
+  "Princess","Assassin","Dancer","Witch","Knight","Idol","Guardian","Traveler",
+  "Spirit","Scholar","Queen","Prince","Mage","Performer","Chef","Detective",
+  "Angel","Demon","Singer","Model"
+];
+
+const twists = [
+  "but gothic","with pastel colors","in a ruined world","with dark magic",
+  "festival edition","but futuristic","with royal elegance","in soft aesthetic",
+  "but chaotic","with celestial vibes"
+];
+
+const nations = [
+  "Apple","Lilith","Cloud","Pigeon",
+  "North","Wasteland","Ruin"
+];
+
+const specialThemes = [
+  "Dessert Princess","Forgotten Fairytale Bride","Cursed Royal Queen",
+  "Runaway Bride","Haunted Doll","Festival Fox Spirit","Elegant Vampire",
+  "Moonlight Knight","Starry Scholar","Ocean Empress"
+];
+
+const lovenikkicompetitionThemes = [
+  "Fresh Spring", "Overwhelming Beauty", "The Most Wonderful Encounter", "Love",
+  "After Class", "A Maiden Heart in Love"
+];
+
+let mode = "simple";
+
+function rand(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById("modeText").innerText = m.toUpperCase();
+}
+
+function generateTheme() {
+  let result = "";
+
+  if (mode === "simple") {
+    result = `${rand(categories)} ${rand(categories)} ${rand(roles)}`;
+  }
+
+  if (mode === "with difficulty") {
+    result = `${rand(categories)} ${rand(roles)} ${rand(twists)}`;
+  }
+
+  if (mode === "series") {
+    const base = rand(categories);
+    result =
+      `${base} ${rand(roles)}\n` +
+      `${base} ${rand(roles)}\n` +
+      `${base} Queen/King`;
+  }
+
+  if (mode === "nation") {
+    result = `${rand(nations)} ${rand(categories)} ${rand(roles)}`;
+  }
+
+  if (mode === "special") {
+    result = rand(specialThemes);
+  }
+  
+  if (mode === "love nikki competition") {
+    result = rand(lovenikkicompetitionThemes)
+  }
+  document.getElementById("theme").innerText = result;
+}
+</script>
+
+</body>
+</html>
