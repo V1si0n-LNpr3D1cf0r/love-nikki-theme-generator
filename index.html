@@ -6,66 +6,97 @@
 <title>Love Nikki Theme Generator</title>
 
 <style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom right, #ffd6ec, #e0c3fc);
-  }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Georgia", serif;
+  background: linear-gradient(to bottom right, #ffe4f3, #e6d6ff);
+}
 
-  .card {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    text-align: center;
-    width: 380px;
-  }
+/* MAIN CARD */
+.card {
+  background: linear-gradient(to bottom, #ffffff, #fff5fb);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  text-align: center;
+  width: 400px;
+  border: 2px solid #f7c6e0;
+}
 
-  button {
-    margin: 3px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    background: #f3f3f3;
-  }
+/* TITLE */
+h2 {
+  margin-top: 0;
+  color: #c96aa6;
+}
 
-  button:hover {
-    background: #ffd1ea;
-  }
+/* MODE BUTTONS */
+button {
+  margin: 4px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #fdf0f7;
+  transition: all 0.2s ease;
+}
 
-  .generate {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    background: #ff8fcf;
-    color: white;
-    cursor: pointer;
-  }
+button:hover {
+  background: #ffd6ec;
+  transform: scale(1.05);
+}
 
-  .box {
-    background: #fff0f6;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 15px 0;
-    white-space: pre-line;
-  }
+/* GENERATE BUTTON */
+.generate {
+  margin-top: 10px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(to right, #ff8fcf, #caa6ff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(255,143,207,0.5);
+}
 
-  .small {
-    font-size: 12px;
-    color: gray;
-  }
+.generate:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255,143,207,0.7);
+}
 
-  .theme {
-    font-size: 18px;
-    font-weight: bold;
-    white-space: pre-line;
-  }
+/* COMPETITION CARD */
+.box {
+  background: linear-gradient(to bottom, #fff, #ffeaf5);
+  padding: 18px;
+  border-radius: 15px;
+  margin: 20px 0;
+  border: 1px solid #f3b6d6;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* SMALL LABEL */
+.small {
+  font-size: 12px;
+  color: #a36c8c;
+  letter-spacing: 1px;
+}
+
+/* THEME TEXT */
+.theme {
+  font-size: 20px;
+  font-weight: bold;
+  color: #5a2d4f;
+  white-space: pre-line;
+}
+
+/* MODE TEXT */
+#modeText {
+  color: #c96aa6;
+  font-weight: bold;
+}
 </style>
 </head>
 
@@ -73,7 +104,8 @@
 
 <div class="card">
   <h2>Styling Theme Generator for Nikki!</h2>
-
+  <p style="font-size:12px; color:#b88aa6;">✨ Style your perfect outfit ✨</p>
+  
   <p><b>Mode:</b> <span id="modeText">SIMPLE</span></p>
 
   <div>
