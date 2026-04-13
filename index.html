@@ -81,6 +81,10 @@
     <button onclick="setMode('with difficulty')">With Difficulty</button>
     <button onclick="setMode('series')">Series</button>
     <button onclick="setMode('nation')">Nation</button>
+    <button onclick="setMode('nation + nation')">Nation + Nation</button>
+    <button onclick="setMode('attribute')">Attribute</button>
+    <button onclick="setMode('nation + tag')">Nation + Tag</button>
+    <button onclick="setMode('tag + attribute')">Tag + Attribute</button>
     <button onclick="setMode('special')">Special</button>
     <button onclick="setMode('love nikki competition')">Love Nikki Competition</button>
   </div>
@@ -115,6 +119,18 @@ const twists = [
 const nations = [
   "Apple","Lilith","Cloud","Pigeon",
   "North","Wasteland","Ruin"
+];
+
+const attribute = [
+  "Simple","Gorgeous","Elegant","Lively","Mature","Cute","Sexy","Pure","Warm","Cool"
+];
+
+const tags = [
+  "Sun Care","Dancer","Floral","Winter","Britain","Shower","Kimono","Pajamas","Wedding",
+ "Army","Chic","Apron","Cheongsam","Maiden","Evening Gown","Sailor","Traditional","Bunny",
+ "Lady","Lolita","Gothic","Sports","Street","Preppy","Unisex","Future","Fairy","Musician",
+ "Workwear","Animal","Goddess","POP","Homewear","Chinese Classical","Multicultural","Republic of China",
+ "European","Swordsman","Rain","Modern China","Dryad","Bohemia","Paramedics"
 ];
 
 const specialThemes = [
@@ -399,6 +415,22 @@ function generateTheme() {
 
   if (mode === "nation") {
     result = `${rand(nations)} ${rand(categories)} ${rand(roles)}`;
+  }
+
+  if (mode === "nation + nation") {
+    result = `${rand(nations)} + ${rand(nations)}`;
+  }
+
+  if (mode === "attribute") {
+    result = `${rand(attribute)} + ${rand(attribute)}`;
+  }
+
+ if (mode === "nation + tag") {
+    result = `${rand(nations)} + ${rand(tags)}`;
+  }
+
+ if (mode === "tag + attribute") {
+    result = `${rand(tags)} + ${rand(attribute)}`;
   }
 
   if (mode === "special") {
