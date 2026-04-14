@@ -53,11 +53,23 @@ body.dark h2 {
 button {
   margin: 4px;
   padding: 8px 12px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
   background: #fdf0f7;
+  color: #3a2f52;
+  backdrop-filter: blur(6px);
   transition: all 0.2s ease;
+  font-weight: bold;
+}  
+
+button:hover {
+  transform: scale(1.08);
+
+  text-shadow:
+    0 0 5px #ff9adf,
+    0 0 10px #caa6ff,
+    0 0 15px #a0e7e5;
 }
 
 body.dark button {
@@ -94,8 +106,41 @@ body.dark .box {
 }
 
 .theme {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
+  white-space: pre-line;
+
+  background: linear-gradient(
+    270deg,
+    #ff9adf,
+    #caa6ff,
+    #a0e7e5,
+    #ffc6ff,
+    #ffd6ec
+  );
+  background-size: 800% 800%;
+
+  -webkit-background-clip: text;
+   background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: pastelFlow 6s ease infinite;
+
+  text-shadow: 0 0 10px rgba(255, 182, 255, 0.5);
+}
+
+.theme {
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
+}
+
+.box {
+  backdrop-filter: blur(6px);
+}
+
+@keyframes pastelFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .toggle-dark {
@@ -173,6 +218,52 @@ body.dark .box {
 
 .pop {
   animation: pop 0.5s forwards !important;
+}
+
+body {
+  color: #5a2d4f;
+}
+
+body.dark {
+  color: #eee;
+}
+
+.small {
+  color: #b88aa6;
+}
+
+body.dark .small {
+  color: #cbb6ff;
+}
+
+h2 {
+  text-shadow: 0 0 10px #ffb3ec;
+}
+
+body.dark h2 {
+  text-shadow: 0 0 10px #caa6ff;
+}
+
+#modeText {
+  font-weight: bold;
+
+  background: linear-gradient(
+    90deg,
+    #ff9adf,
+    #caa6ff,
+    #a0e7e5
+  );
+
+  -webkit-background-clip: text;
+   background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 8px rgba(255, 170, 230, 0.6);
+}
+
+button.active {
+  box-shadow: 0 0 10px #ff9adf, 0 0 20px #caa6ff;
+  transform: scale(1.1);
 }
 
 </style>
@@ -586,7 +677,36 @@ function generateTheme() {
   if (mode === "love nikki competition") {
     result = rand(lovenikkicompetitionThemes)
   }
-  document.getElementById("theme").innerText = result;
+ const themeEl = document.getElementById("theme");
+   themeEl.innerText = result;
+
+}
+
+function applyThemeColor(){
+  const colors = [
+    "#ff9adf", "#caa6ff", "#ffd6ec", "#a0e7e5",
+    "#ffc6ff", "#bdb2ff", "#ffadad", "#caffbf"
+  ];
+
+  const color = colors[Math.floor(Math.random() * colors.length)];
+
+  // change theme text color
+  document.getElementById("theme").style.color = color;
+
+  // change glow (extra pretty)
+  document.getElementById("theme").style.textShadow =
+    `0 0 8px ${color}, 0 0 15px ${color}`;
+}
+
+function setMode(m){
+  mode = m;
+  document.getElementById("modeText").innerText = m.toUpperCase();
+
+  document.querySelectorAll("button").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  event.target.classList.add("active");
 }
 
 function toggleDark(){
