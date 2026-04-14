@@ -18,12 +18,10 @@ body {
   transition: background 0.5s;
 }
 
-/* DARK MODE */
 body.dark {
   background: linear-gradient(to bottom right, #1a1a2e, #2a1f3d);
 }
 
-/* CARD */
 .card {
   position: relative;
   background: linear-gradient(to bottom, #ffffff, #fff5fb);
@@ -52,7 +50,6 @@ body.dark h2 {
   color: #d6b3ff;
 }
 
-/* BUTTONS */
 button {
   margin: 4px;
   padding: 8px 12px;
@@ -101,7 +98,6 @@ body.dark .box {
   font-weight: bold;
 }
 
-/* DARK MODE BUTTON */
 .toggle-dark {
   position: absolute;
   top: 10px;
@@ -110,7 +106,6 @@ body.dark .box {
   font-size: 18px;
 }
 
-/* FLOATING SAKURA */
 .sakura {
   position: fixed;
   width: 20px;
@@ -130,7 +125,6 @@ body.dark .box {
   }
 }
 
-/* CREDIT */
 .credit {
   position: fixed;
   bottom: 10px;
@@ -147,7 +141,6 @@ body.dark .box {
   50% { transform: translateY(-5px); }
 }
 
-/* MOBILE */
 @media (max-width: 500px) {
   button {
     font-size: 11px;
@@ -158,6 +151,30 @@ body.dark .box {
     font-size: 16px;
   }
 }
+
+.sakura.far {
+  filter: blur(1px);
+  opacity: 0.4;
+}
+
+.sakura.mid {
+  opacity: 0.7;
+}
+
+.sakura.near {
+  filter: drop-shadow(0 0 6px pink);
+  opacity: 1;
+}
+
+@keyframes pop {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: scale(2) rotate(180deg); opacity: 0; }
+}
+
+.pop {
+  animation: pop 0.5s forwards !important;
+}
+
 </style>
 </head>
 
@@ -576,18 +593,46 @@ function toggleDark(){
   document.body.classList.toggle("dark");
 }
 
+const sakuraImages = [
+  "https://raw.githubusercontent.com/V1si0n-LNpr3D1cf0r/love-nikki-theme-generator/main/heartwing.png",
+  "https://raw.githubusercontent.com/V1si0n-LNpr3D1cf0r/love-nikki-theme-generator/main/rabbit.png",
+  "https://raw.githubusercontent.com/V1si0n-LNpr3D1cf0r/love-nikki-theme-generator/main/yellowbear.png"
+];
+
 function createSakura(){
   const sakura = document.createElement("img");
-  sakura.src = "https://github.com/V1si0n-LNpr3D1cf0r/love-nikki-theme-generator/blob/main/heartwing.png?raw=true";
+
+  sakura.src = sakuraImages[Math.floor(Math.random() * sakuraImages.length)];
   sakura.className = "sakura";
 
+  const depth = Math.random();
+
+  if(depth < 0.33){
+    sakura.classList.add("far");
+    sakura.style.animationDuration = (8 + Math.random()*4) + "s"; // slow
+    sakura.style.transform = `scale(${Math.random() * 0.4 + 0.3})`;
+  }
+  else if(depth < 0.66){
+    sakura.classList.add("mid");
+    sakura.style.animationDuration = (6 + Math.random()*3) + "s";
+    sakura.style.transform = `scale(${Math.random() * 0.6 + 0.5})`;
+  }
+  else{
+    sakura.classList.add("near");
+    sakura.style.animationDuration = (4 + Math.random()*2) + "s"; // fast
+    sakura.style.transform = `scale(${Math.random() * 0.9 + 0.8})`;
+  }
+
   sakura.style.left = Math.random() * 100 + "vw";
-  sakura.style.animationDuration = (5 + Math.random()*5) + "s";
-  sakura.style.opacity = Math.random();
+
+  sakura.addEventListener("click", () => {
+    sakura.classList.add("pop");
+    setTimeout(() => sakura.remove(), 500);
+  });
 
   document.body.appendChild(sakura);
 
-  setTimeout(()=>sakura.remove(), 10000);
+  setTimeout(() => sakura.remove(), 12000);
 }
 
 setInterval(createSakura, 300);
