@@ -15,36 +15,32 @@ body {
   font-family: "Georgia", serif;
   background: linear-gradient(to bottom right, #ffe4f3, #e6d6ff);
   overflow: hidden;
+  transition: background 0.5s;
 }
 
-/* 🌸 FLOATING BACKGROUND PARTICLES */
-.particle {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 192, 203, 0.6);
-  border-radius: 50%;
-  animation: floatUp linear infinite;
+/* DARK MODE */
+body.dark {
+  background: linear-gradient(to bottom right, #1a1a2e, #2a1f3d);
 }
 
-@keyframes floatUp {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-10vh); }
-}
-
+/* CARD */
 .card {
+  position: relative;
   background: linear-gradient(to bottom, #ffffff, #fff5fb);
-  padding: 25px;
+  padding: 20px;
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   text-align: center;
-  width: 400px;
+  width: 90%;
+  max-width: 420px;
   border: 2px solid #f7c6e0;
-  transition: 0.3s;
+  z-index: 2;
 }
 
-.card:hover {
-  transform: translateY(-5px) scale(1.01);
+body.dark .card {
+  background: linear-gradient(to bottom, #2c2340, #1f1a2e);
+  border: 2px solid #7a5aa6;
+  color: #eee;
 }
 
 h2 {
@@ -52,6 +48,11 @@ h2 {
   color: #c96aa6;
 }
 
+body.dark h2 {
+  color: #d6b3ff;
+}
+
+/* BUTTONS */
 button {
   margin: 4px;
   padding: 8px 12px;
@@ -62,92 +63,107 @@ button {
   transition: all 0.2s ease;
 }
 
+body.dark button {
+  background: #3a2f52;
+  color: white;
+}
+
 button:hover {
   background: #ffd6ec;
-  transform: scale(1.08);
-  box-shadow: 0 0 10px #ffcce6;
+  transform: scale(1.05);
 }
 
 .generate {
   margin-top: 10px;
   padding: 12px 22px;
   border-radius: 12px;
-  border: none;
   background: linear-gradient(to right, #ff8fcf, #caa6ff);
   color: white;
   font-weight: bold;
-  cursor: pointer;
   box-shadow: 0 5px 15px rgba(255,143,207,0.5);
-}
-
-.generate:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 20px #ffb6e6;
 }
 
 .box {
   background: linear-gradient(to bottom, #fff, #ffeaf5);
-  padding: 18px;
+  padding: 15px;
   border-radius: 15px;
-  margin: 20px 0;
+  margin: 15px 0;
   border: 1px solid #f3b6d6;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
-  transition: 0.3s;
 }
 
-.box:hover {
-  box-shadow: 0 0 15px #ffd6ec inset;
+body.dark .box {
+  background: #2a213b;
+  border: 1px solid #7a5aa6;
 }
 
-.small {
-  font-size: 12px;
-  color: #a36c8c;
-  letter-spacing: 1px;
-}
-
-/* 🌈 ANIMATED THEME TEXT */
 .theme {
-  font-size: 20px;
-  font-weight: bold;
-  white-space: pre-line;
-  background: linear-gradient(90deg, #ff8fcf, #caa6ff, #8fd3ff);
-  background-size: 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientMove 4s linear infinite;
-}
-
-@keyframes gradientMove {
-  0% { background-position: 0%; }
-  100% { background-position: 200%; }
-}
-
-#modeText {
-  color: #c96aa6;
+  font-size: 18px;
   font-weight: bold;
 }
 
-/* ✨ FLOATING CREDIT */
+/* DARK MODE BUTTON */
+.toggle-dark {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* FLOATING SAKURA */
+.sakura {
+  position: fixed;
+  width: 20px;
+  pointer-events: none;
+  animation: fall linear infinite;
+  z-index: 1;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* CREDIT */
 .credit {
   position: fixed;
-  bottom: 15px;
+  bottom: 10px;
   width: 100%;
   text-align: center;
   font-size: 14px;
-  color: #ff8fcf;
-  text-shadow: 0 0 5px #ff8fcf, 0 0 10px #ffb6e6;
+  color: #fff;
+  text-shadow: 0 0 5px #ff9adf, 0 0 10px #ff9adf;
   animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
-  50% { transform: translateY(-6px); }
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* MOBILE */
+@media (max-width: 500px) {
+  button {
+    font-size: 11px;
+    padding: 6px;
+  }
+
+  .theme {
+    font-size: 16px;
+  }
 }
 </style>
 </head>
 
 <body>
-
 <div class="card">
+  <div class="toggle-dark" onclick="toggleDark()">🌙</div>
   <h2>Styling Theme Generator for Nikki!</h2>
   <p style="font-size:12px; color:#b88aa6;">✨ Style your perfect outfit ✨</p>
   
@@ -181,31 +197,6 @@ button:hover {
 <div class="credit">🌸Made by Manami (@ramunesakura at Discord, u/OkTumbleweed3562 at Reddit)🌸</div>
 
 <script>
-for (let i = 0; i < 25; i++) {
-  let p = document.createElement("div");
-  p.className = "particle";
-  p.style.left = Math.random() * 100 + "vw";
-  p.style.animationDuration = (5 + Math.random() * 10) + "s";
-  document.body.appendChild(p);
-}
-
-// ✨ SPARKLE CURSOR
-document.addEventListener("mousemove", e => {
-  let spark = document.createElement("div");
-  spark.style.position = "fixed";
-  spark.style.left = e.clientX + "px";
-  spark.style.top = e.clientY + "px";
-  spark.style.width = "6px";
-  spark.style.height = "6px";
-  spark.style.background = "#fff";
-  spark.style.borderRadius = "50%";
-  spark.style.pointerEvents = "none";
-  spark.style.boxShadow = "0 0 10px pink";
-  document.body.appendChild(spark);
-
-  setTimeout(() => spark.remove(), 300);
-});
-
 const categories = [
   "Dessert","Ocean","Cyberpunk","Royal","Festival","Winter","Floral","Space",
   "Ancient","Dream","Steampunk","Fairytale","Music","Circus","School","Battle",
@@ -580,6 +571,27 @@ function generateTheme() {
   }
   document.getElementById("theme").innerText = result;
 }
+
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+function createSakura(){
+  const sakura = document.createElement("img");
+  sakura.src = "https://github.com/V1si0n-LNpr3D1cf0r/love-nikki-theme-generator/blob/main/heartwing.png"; // sakura petal image
+  sakura.className = "sakura";
+
+  sakura.style.left = Math.random() * 100 + "vw";
+  sakura.style.animationDuration = (5 + Math.random()*5) + "s";
+  sakura.style.opacity = Math.random();
+
+  document.body.appendChild(sakura);
+
+  setTimeout(()=>sakura.remove(), 10000);
+}
+
+setInterval(createSakura, 300);
+
 </script>
 
 </body>
