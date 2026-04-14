@@ -14,6 +14,22 @@ body {
   align-items: center;
   font-family: "Georgia", serif;
   background: linear-gradient(to bottom right, #ffe4f3, #e6d6ff);
+  overflow: hidden;
+}
+
+/* 🌸 FLOATING BACKGROUND PARTICLES */
+.particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 192, 203, 0.6);
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
 }
 
 .card {
@@ -24,6 +40,11 @@ body {
   text-align: center;
   width: 400px;
   border: 2px solid #f7c6e0;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.01);
 }
 
 h2 {
@@ -43,7 +64,8 @@ button {
 
 button:hover {
   background: #ffd6ec;
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 0 10px #ffcce6;
 }
 
 .generate {
@@ -59,8 +81,8 @@ button:hover {
 }
 
 .generate:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(255,143,207,0.7);
+  transform: scale(1.08);
+  box-shadow: 0 0 20px #ffb6e6;
 }
 
 .box {
@@ -70,6 +92,11 @@ button:hover {
   margin: 20px 0;
   border: 1px solid #f3b6d6;
   box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.box:hover {
+  box-shadow: 0 0 15px #ffd6ec inset;
 }
 
 .small {
@@ -78,16 +105,42 @@ button:hover {
   letter-spacing: 1px;
 }
 
+/* 🌈 ANIMATED THEME TEXT */
 .theme {
   font-size: 20px;
   font-weight: bold;
-  color: #5a2d4f;
   white-space: pre-line;
+  background: linear-gradient(90deg, #ff8fcf, #caa6ff, #8fd3ff);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 4s linear infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
 }
 
 #modeText {
   color: #c96aa6;
   font-weight: bold;
+}
+
+/* ✨ FLOATING CREDIT */
+.credit {
+  position: fixed;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #ff8fcf;
+  text-shadow: 0 0 5px #ff8fcf, 0 0 10px #ffb6e6;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% { transform: translateY(-6px); }
 }
 </style>
 </head>
@@ -104,6 +157,7 @@ button:hover {
     <button onclick="setMode('simple')">Simple</button>
     <button onclick="setMode('with a twist')">With a Twist</button>
     <button onclick="setMode('series')">Series</button>
+    <button onclick="setMode('characters')">Cosplay!</button>
     <button onclick="setMode('colors')">Colors</button>
     <button onclick="setMode('single rarity')">Rarity</button>
     <button onclick="setMode('rarity combination')">Rarity Combo</button>
@@ -121,10 +175,37 @@ button:hover {
     <div class="theme" id="theme">Click generate to get a theme!</div>
   </div>
 
-  <button class="generate" onclick="generateTheme()">🎲 Generate</button>
+  <button class="generate" onclick="generateTheme()">Generate!</button>
 </div>
 
+<div class="credit">🌸Made by Manami (@ramunesakura at Discord, u/OkTumbleweed3562 at Reddit)🌸</div>
+
 <script>
+for (let i = 0; i < 25; i++) {
+  let p = document.createElement("div");
+  p.className = "particle";
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.animationDuration = (5 + Math.random() * 10) + "s";
+  document.body.appendChild(p);
+}
+
+// ✨ SPARKLE CURSOR
+document.addEventListener("mousemove", e => {
+  let spark = document.createElement("div");
+  spark.style.position = "fixed";
+  spark.style.left = e.clientX + "px";
+  spark.style.top = e.clientY + "px";
+  spark.style.width = "6px";
+  spark.style.height = "6px";
+  spark.style.background = "#fff";
+  spark.style.borderRadius = "50%";
+  spark.style.pointerEvents = "none";
+  spark.style.boxShadow = "0 0 10px pink";
+  document.body.appendChild(spark);
+
+  setTimeout(() => spark.remove(), 300);
+});
+
 const categories = [
   "Dessert","Ocean","Cyberpunk","Royal","Festival","Winter","Floral","Space",
   "Ancient","Dream","Steampunk","Fairytale","Music","Circus","School","Battle",
@@ -143,10 +224,14 @@ const twists = [
   "but chaotic","with celestial vibes"
 ];
 
+const characters = [
+  "Nikki","Kimi","Momo","Bobo","Lunar","Fusu","Sofia","Orlando","Shade","Nidhogg"
+];
+
 const colors = [
   "Red","Orange","Yellow","Green","Blue","Purple","Pink","Black","White","Beige",
   "Gold","Silver","Gray","Teal","Brown"
-]
+];
 
 const rarity = [
   "1♥ only","2♥ only","3♥ only","4♥ only","5♥ only","6♥ only"
@@ -435,7 +520,7 @@ function generateTheme() {
   let result = "";
 
   if (mode === "simple") {
-    result = `${rand(categories)} ${rand(categories)} ${rand(roles)}`;
+    result = `${rand(categories)} ${rand(roles)}`;
   }
 
   if (mode === "with a twist") {
@@ -450,6 +535,10 @@ function generateTheme() {
       `${base} Queen/King`;
   }
   
+  if (mode === "characters") {
+    result = `${rand(characters)} ${rand(twists)}`;
+  }
+
   if (mode === "colors") {
     result = `${rand(colors)} + ${rand(colors)}`;
   }
